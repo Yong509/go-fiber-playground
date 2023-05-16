@@ -18,7 +18,31 @@ var users = []User{
 	{ID: 3, Name: "John", Age: 30},
 }
 
-func getUser(c *fiber.Ctx) error {
+func getAllUser(c *fiber.Ctx) error {
+	return c.JSON(users)
+}
+
+func findUser(c *fiber.Ctx) error {
+	id := c.Params("id")
+	for _, user := range users {
+		if strconv.Itoa(user.ID) == id {
+			return c.JSON(user)
+		}
+	}
+	return c.SendStatus(fiber.StatusNotFound)
+}
+
+func createUser(c *fiber.Ctx) error {
+	user := new(User)
+	if err := c.BodyParser(user); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "create user unsuccessfully",
+			"status":  fiber.StatusBadRequest,
+		})
+	}
+	user.ID = len(users) + 1
+	users = append(users, *user)
+
 	return c.JSON(users)
 }
 
@@ -30,7 +54,9 @@ func main() {
 		return c.SendString("Hello " + strconv.Itoa(users[0].ID) + " " + users[0].Name)
 	})
 
-	app.Get("/user", getUser)
+	app.Get("/user", getAllUser)
+	app.Get("/user/:id", findUser)
+	app.Post("/create/user", createUser)
 
 	app.Listen(":8000")
 }
