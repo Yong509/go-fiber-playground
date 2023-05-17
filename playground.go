@@ -5,13 +5,8 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/yong509/go-fiber-playground/types"
 )
-
-type User struct {
-	ID   int    `json:"ID"`
-	Name string `json:"Name" validate:"required,min=3,max=32"`
-	Age  int    `json:"Age" validate:"required,number"`
-}
 
 var users = []User{
 	{ID: 1, Name: "James", Age: 10},
@@ -19,13 +14,12 @@ var users = []User{
 	{ID: 3, Name: "John", Age: 30},
 }
 
-type ErrorResponse struct {
-	FailedField string
-	Tag         string
-	Value       string
-}
-
 var validate = validator.New()
+
+type (
+	ErrorResponse types.ErrorResponse
+	User          types.User
+)
 
 func validateStruct(user User) []*ErrorResponse {
 	var errors []*ErrorResponse
