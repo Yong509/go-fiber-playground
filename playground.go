@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/yong509/go-fiber-playground/handlers"
 	"github.com/yong509/go-fiber-playground/middlewares"
 	"github.com/yong509/go-fiber-playground/types"
@@ -75,7 +76,10 @@ func createUser(c *fiber.Ctx) error {
 
 func main() {
 	app := fiber.New()
-
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 	jwt := middlewares.Auth(utility.GoDotEnvVariable("SECRET_KEY"))
 
 	app.Get("/", func(c *fiber.Ctx) error {
