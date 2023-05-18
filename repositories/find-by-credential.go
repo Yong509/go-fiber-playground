@@ -3,7 +3,7 @@ package repository
 import (
 	"errors"
 
-	"github.com/yong509/go-fiber-playground/types"
+	types "github.com/yong509/go-fiber-playground/models"
 )
 
 func FindByCredentials(email, password string) (*types.User, error) {

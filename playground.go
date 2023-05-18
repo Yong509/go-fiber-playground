@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/yong509/go-fiber-playground/handlers"
 	"github.com/yong509/go-fiber-playground/middlewares"
-	"github.com/yong509/go-fiber-playground/types"
+	types "github.com/yong509/go-fiber-playground/models"
 	utility "github.com/yong509/go-fiber-playground/utilities"
 )
 

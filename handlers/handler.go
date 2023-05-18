@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	jtoken "github.com/golang-jwt/jwt/v4"
+	types "github.com/yong509/go-fiber-playground/models"
 	repository "github.com/yong509/go-fiber-playground/repositories"
-	"github.com/yong509/go-fiber-playground/types"
 	utility "github.com/yong509/go-fiber-playground/utilities"
 )
 
