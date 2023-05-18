@@ -5,13 +5,16 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/yong509/go-fiber-playground/handlers"
+	"github.com/yong509/go-fiber-playground/middlewares"
 	"github.com/yong509/go-fiber-playground/types"
+	utility "github.com/yong509/go-fiber-playground/utilities"
 )
 
 var users = []User{
-	{ID: 1, Name: "James", Age: 10},
-	{ID: 2, Name: "George", Age: 20},
-	{ID: 3, Name: "John", Age: 30},
+	{ID: 1, Name: "James", Age: 10, Email: "test@gmail.com"},
+	{ID: 2, Name: "George", Age: 2, Email: "test@gmail.com"},
+	{ID: 3, Name: "John", Age: 30, Email: "test@gmail.com"},
 }
 
 var validate = validator.New()
@@ -73,6 +76,8 @@ func createUser(c *fiber.Ctx) error {
 func main() {
 	app := fiber.New()
 
+	jwt := middlewares.Auth(utility.GoDotEnvVariable("SECRET_KEY"))
+
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello " + strconv.Itoa(users[0].ID) + " " + users[0].Name)
 	})
@@ -80,6 +85,8 @@ func main() {
 	app.Get("/user", getAllUser)
 	app.Get("/user/:id", findUser)
 	app.Post("/create/user", createUser)
+	app.Post("/login", handlers.Login)
+	app.Get("/protected", jwt, handlers.Protected)
 
 	app.Listen(":8000")
 }
