@@ -7,4 +7,8 @@ import (
 
 func Initalize(router *fiber.App) {
 	router.Use(middlewares.Security)
+
+	router.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello")
+	})
 }
