@@ -11,4 +11,8 @@ func Initalize(router *fiber.App) {
 	router.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello")
 	})
+
+	router.Get("/say-hello", func(c *fiber.Ctx) error {
+		return c.SendString("Hello Error")
+	})
 }
